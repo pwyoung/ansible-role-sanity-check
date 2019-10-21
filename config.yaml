@@ -1,4 +1,29 @@
 ---
+################################################################################
+# GLOBAL BOX DEFINITIONS
+################################################################################
+# There is some support for static IPs.
+#   - On VirtualBox:
+#     - 'ip', if given,  will be the IP on an internal network
+#     - 'ip2', if given, will be the IP on an internal network
+#     - 'netmask', if given, will be applies to the networks with 'ip' and/or 'ip2'
+#   - On Libvirt, the values of 'ip', 'ip2', and 'netmask' (currently) don't currently matter.
+#     - 'ip2', if given, cause a second NIC to be created (on 'libvir1')
+#     - In future, we could automate management of QEMU networks (as we do with QEMU disks)
+#   - Example:
+#boxes:
+#  - name: test-1
+#    ip: 192.254.3.10
+#    netmask: 255.255.255.128
+#    ip2: 192.254.3.138
+boxes:
+  - name: test-1
+  - name: test-2
+  - name: test-3
+
+################################################################################
+# PROVISIONER: VAGRANT 
+################################################################################
 vagrant_global:
   # Only create the first 'limit_num_boxes' boxes
   #limit_boxes: "yes"
@@ -66,26 +91,15 @@ vagrant_global:
     # So, if the Vagrantfile is in /a/b/c/PROJECT_NAME/foo/Vagrantfile then 'PROJECT_NAME' is used
     append_project_name_to_nvme_disk_path: 'true'
 
-# There is some support for static IPs.
-#   - On VirtualBox:
-#     - 'ip', if given,  will be the IP on an internal network
-#     - 'ip2', if given, will be the IP on an internal network
-#     - 'netmask', if given, will be applies to the networks with 'ip' and/or 'ip2'
-#   - On Libvirt, the values of 'ip', 'ip2', and 'netmask' (currently) don't currently matter.
-#     - 'ip2', if given, cause a second NIC to be created (on 'libvir1')
-#     - In future, we could automate management of QEMU networks (as we do with QEMU disks)
-#boxes:
-#  - name: test-1
-#    ip: 192.254.3.10
-#    netmask: 255.255.255.128
-#    ip2: 192.254.3.138
-boxes:
-  - name: test-1
-  - name: test-2
-  - name: test-3
+################################################################################
+# PROVISIONER: TERRAFORM (TODO)
+################################################################################
 
+################################################################################
+# CONFIGURATION: VIA ANSIBLE
+################################################################################
 ansible:
-  # These roles are added to build/requirements.yaml and are added
+  # These roles are added to build/requirements.yaml and are added 
   # locally via 'ansible-galaxy'.
   roles:
     - src: https://github.com/pwyoung/ansible-role-sanity-check
@@ -102,7 +116,7 @@ ansible:
       name: "ansible-playbook-sanity-check"
       scm: git
       version: 0.0.1
-      entry: playbook.yaml  # Defaults to site.yml
+      entry: playbook.yaml # Defaults to site.yml
   # Use this to create build/inventory.yml
   inventory:
     all:
