@@ -22,7 +22,7 @@ boxes:
   - name: test-3
 
 ################################################################################
-# PROVISIONER: VAGRANT 
+# PROVISIONER: VAGRANT
 ################################################################################
 vagrant_global:
   # Only create the first 'limit_num_boxes' boxes
@@ -40,10 +40,12 @@ vagrant_global:
       size: 102401
     data2:
       size: 102401
+  #
   # You can use force_provider if your OS defaults differ from the default
   # heuristics on Vagrantfile.
   #force_provider: "libvirt"
   #force_provider: "virtualbox"
+  #
   virtualbox_cfg:
     enabled: "true" # If not "true" then omit from Vagrantfile
     # https://app.vagrantup.com/ubuntu/boxes/bionic64
@@ -99,7 +101,7 @@ vagrant_global:
 # CONFIGURATION: VIA ANSIBLE
 ################################################################################
 ansible:
-  # These roles are added to build/requirements.yaml and are added 
+  # These roles are added to build/requirements.yaml and are added
   # locally via 'ansible-galaxy'.
   roles:
     - src: https://github.com/pwyoung/ansible-role-sanity-check
@@ -109,14 +111,19 @@ ansible:
   # 'playbooks' specifies a list of playbooks to fetch.
   # Currently, only 'scm: git' is supported.
   # Each playbook will be cloned into build/playbooks/<entry>
-  # A script, build/run_playbooks.sh will be created so that the playbooks
+  # A script, build/run-playbooks.sh will be created so that the playbooks
   # can be run manually (e.g. during development of a local role)
   playbooks:
-    - src: "https://github.com/pwyoung/ansible-playbook-sanity-check"
-      name: "ansible-playbook-sanity-check"
+    - name: ansible-playbook-deploy-kubespray
       scm: git
-      version: 0.0.1
-      entry: playbook.yaml # Defaults to site.yml
+      src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray      
+      version: dev
+      #entry: site.yml # Default
+#    - src: "https://github.com/pwyoung/ansible-playbook-sanity-check"
+#      name: "ansible-playbook-sanity-check"
+#      method: git
+#      version: 0.0.1
+#      entry: playbook.yaml # Defaults to site.yml
   # Use this to create build/inventory.yml
   inventory:
     all:
