@@ -1,0 +1,50 @@
+---
+# Assign kubespray_user and kubespray_user_home
+# Set 'become: yes' to use the admin user
+# Set 'become: no' to use the normal vagrant user
+# TODO: remove this line once everything has been tested with both options
+- hosts: all
+  become: yes
+  gather_facts: yes
+  any_errors_fatal: true
+  tasks:
+    - name: Determine kubespray_user and kubespray_user_home
+      set_fact:
+        kubespray_user: "{{ ansible_user_id }}"
+        kubespray_user_home: "{{ ansible_user_dir }}"
+    - debug:
+        msg: "kubespray_user: {{ kubespray_user }}"
+    - debug:
+        msg: "kubespray_user_home: {{ kubespray_user_home }}"
+
+# Create the SSH key
+- hosts: kube-master[0]
+  become: yes
+  gather_facts: yes
+  any_errors_fatal: true
+  tasks:
+    - name: Create SSH Key
+      user:
+        name: "{{ kubespray_user }}"
+        generate_ssh_key: yes
+        ssh_key_file: .ssh/id_rsa
+    - name: Store public key as fact
+      shell: cat "{{ kubespray_user_home }}"/.ssh/id_rsa.pub
+      register: pub_key
+    - set_fact:
+        pub_key_contents: "{{ pub_key.stdout }}"
+    - debug:
+        msg: "pub_key_contents: {{ pub_key_contents }}"
+    - debug:
+        msg: "kubespray_user_home: {{ kubespray_user_home }}"
+
+# Distribute Ansible user's Public SSH key to all hosts
+- hosts: all
+  become: yes
+  gather_facts: yes
+  any_errors_fatal: true
+  tasks:
+    - authorized_key:
+        user: "{{ kubespray_user }}"
+        state: present
+        key: "{{ hostvars[ groups['kube-master'][0] ].pub_key_contents }}"

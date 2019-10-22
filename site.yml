@@ -9,7 +9,8 @@
     - name: Set dev/test related facts
       set_fact:
         debug_info: no
-        test_update_local_dns: yes
+        update_local_dns: no
+        configure_kubespray_user: yes
 
 - hosts: all
   become: yes
@@ -34,5 +35,8 @@
     - name: Update local DNS on all hosts with Ansible Group {{ local_dns_group }}
       include_role:
         name: update-local-dns
-      when: test_update_local_dns
+      when: update_local_dns
 
+- name: Configure Kubespray User
+  import_playbook: configure-kubespray-user.yml
+  when: configure_kubespray_user
