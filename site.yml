@@ -1,4 +1,9 @@
 ---
+# Notes:
+#   - Let playbooks govern the order and scope of the tasks
+#     as required.
+#   - Put as much code as possible into Roles since they have
+#     support for re-use (e.g. via ansible-galaxy).
 - hosts: all
   tasks:
     - name: Set dev/test related facts
@@ -21,13 +26,12 @@
         name: dump-all-variables
       when: debug_info
 
-# Update /etc/hosts on hosts in the Ansible Group matching local_dns_group
 - name: Update local DNS
   hosts: all
   vars:
-    local_dns_group: "all" 
+    local_dns_group: "all"
   tasks:
-    - name: Update local DNS on all hosts in Ansible Group {{ local_dns_group }}
+    - name: Update local DNS on all hosts with Ansible Group {{ local_dns_group }}
       include_role:
         name: update-local-dns
       when: test_update_local_dns
