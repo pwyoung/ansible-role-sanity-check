@@ -117,7 +117,7 @@ ansible:
     - name: ansible-playbook-deploy-kubespray
       scm: git
       src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray      
-      version: dev
+      version: master
       #entry: site.yml # Default
 #    - src: "https://github.com/pwyoung/ansible-playbook-sanity-check"
 #      name: "ansible-playbook-sanity-check"

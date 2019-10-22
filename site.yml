@@ -1,21 +1,22 @@
 ---
 - hosts: all
+  tasks:
+    - name: Set dev/test related facts
+      set_fact:
+        debug_info: yes
+
+- hosts: all
   become: yes
+  tasks:
+      - name: Test that this can create create a file
+        command: /usr/bin/touch /tmp/test_from_site.yml
+        when: debug_info is defined and debug_info == True
 
-tasks:
-- name: create a complete empty file
-  command: /usr/bin/touch /test/test.conf
-
-
-#- name: Add IP address of all hosts to all hosts
-#  lineinfile:
-#      dest: /etc/hosts
-#      regexp: '.*{{ item }}$'
-#      line: "{{ hostvars[item].ansible_host }} {{item}}"
-#      state: present
-#      when: hostvars[item].ansible_host is defined
-#      with_items: "{{ groups.all }}"
-#
-#- debug: msg="USER={{lookup('env','USER')}}"
-#- debug: msg="GROUPS={{groups}}"
-#
+- name: Dump All Ansible Variables
+  hosts: all
+  become: yes
+  tasks:
+    - name: Dump all variables
+      include_role:
+        name: dump-all-variables
+      when: debug_info is defined and debug_info == True
