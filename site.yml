@@ -10,9 +10,8 @@
   tasks:
     - name: Set some facts
       set_fact:
-        debug_info: yes
-        update_local_dns: yes
-        configure_kubespray_user: yes
+        debug_info: no
+        update_local_dns: no
         install_kubespray: yes        
 
 - name: Dump All Ansible Variables
@@ -36,18 +35,14 @@
 
 - name: Configure Kubespray User
   import_playbook: configure-kubespray-user.yml
-  when: configure_kubespray_user
+  when: install_kubespray
 
 - name: Install Kubespray
   hosts: kube-master[0]
   become: yes
   become_user: "{{ kubespray_user }}"  
   tasks:
-    - name: TEST
-      debug:
-        msg="TEST"
-      when: install_kubespray
-    - name: Install Kubespray
+    - name: Include install-kubespray Role
       include_role:
         name: install-kubespray
       when: install_kubespray
