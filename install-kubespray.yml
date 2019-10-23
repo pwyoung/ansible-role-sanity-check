@@ -1,6 +1,6 @@
 ---
 - name: Install Kubespray
-  hosts: all
+  hosts: kube-master[0]
   tasks:
     - name: Install Kubespray Role
       include_role:
