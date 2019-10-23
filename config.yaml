@@ -122,7 +122,8 @@ ansible:
       entry: playbook.yaml # Defaults to site.yml
     - name: ansible-playbook-deploy-kubespray
       scm: git
-      src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray
+      #src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray
+      src: file:///.
       version: dev
       #entry: site.yml # Default
   # Use this to create build/inventory.yml
