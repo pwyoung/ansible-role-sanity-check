@@ -6,19 +6,10 @@
   when: ansible_distribution == "Ubuntu"
   #tags: [ never ]
 
-- name: Run Command
+- name: Get Ansible Version (from command)
   command: "ansible --version"
   register: results  
 
-- name: Show Command Results
+- name: Show Ansible Version
   debug:
     msg: "{{ results }}"
-
-- name: Run Shell
-  shell: "ansible --version"
-  register: results
-
-- name: Show Shell Results
-  debug:
-    msg: "{{ results }}"
-
