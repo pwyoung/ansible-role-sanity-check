@@ -13,6 +13,7 @@
     #tags: [ never, debug ]
     
 - name: Install Kubespray Python requirements
+  become: yes
   pip:
     requirements: "{{ kubespray_user_dir }}/kubespray/requirements.txt"
     executable: "pip3"
