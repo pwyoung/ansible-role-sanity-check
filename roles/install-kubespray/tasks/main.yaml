@@ -1,8 +1,8 @@
 
-- name: Install Ansible
+- name: Install Ansible TODO-HELLO-1
   include_tasks: install-ansible.yaml
   #tags: [ never, debug ]
 
-- name: Install Kubespray
+- name: Install Kubespray TODO-HELLO-2
   include_tasks: install-kubespray.yaml
   tags: [ never, debug ]

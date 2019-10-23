@@ -1,5 +1,4 @@
 - name: Install Ansible via APT
-  become: yes
   apt:
     name: ansible
     update_cache: yes
