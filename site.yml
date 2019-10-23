@@ -4,9 +4,9 @@
   tasks:
     - name: Set some facts
       set_fact:
-        dump_all_variables: no
-        install_python3: no
-        update_local_dns: no
+        dump_all_variables: yes
+        install_python3: yes
+        update_local_dns: yes
         install_kubespray: yes
 
 - name: Dump All Variables

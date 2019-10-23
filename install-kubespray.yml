@@ -10,7 +10,7 @@
 - name: Create the SSH key
   hosts: kube-master[0]
   become: yes
-  become: "{{ kubespray_user }}"
+  become_user: "{{ kubespray_user }}"
   any_errors_fatal: true
   tasks:
     - name: Create SSH Key
@@ -44,11 +44,9 @@
   hosts: all
   become: yes
   tasks:
-#    - name: Disable SELINUX and Apparmor
-#      debug:
-#        msg: "TODO: disable these or remove this"
     - name: Disable Swap
-      shell: swapoff -a    
+      shell: swapoff -a
+      #TODO: use swappiness
       #shell: /usr/sbin/sysctl vm.swappiness=0 # Requires setting "kubelet_fail_swap_on: false"
 
 - name: Install Kubespray

@@ -4,3 +4,8 @@
     dest: "{{ kubespray_user_dir }}/kubespray"
     version: "{{ kubespray_version }}"
     force: yes
+
+- name: Install Python requirements
+  pip:
+    requirements: "{{ kubespray_user_dir }}/kubespray/requirements.txt"
+    executable: "pip3"
