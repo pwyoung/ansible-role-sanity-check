@@ -1,0 +1,5 @@
+- name: Install Anible via APT
+  apt:
+    name: ansible
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
