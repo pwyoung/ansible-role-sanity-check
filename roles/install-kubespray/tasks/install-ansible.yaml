@@ -1,4 +1,23 @@
+- name: Run Command
+  become: yes
+  command: whoami
+  register: results  
+
+- name: Show Command Results
+  debug:
+    msg: results
+
+- name: Run Shell
+  become: yes
+  shell:  whoami
+  register: results
+
+- name: Show Shell Results
+  debug:
+    msg: results
+
 - name: Install Ansible via APT
+  become: yes
   apt:
     name: ansible
     update_cache: yes
