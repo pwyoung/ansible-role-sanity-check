@@ -1,4 +1,5 @@
 - name: Install Kubespray Git Repo
+  gather_facts: yes
   git:
     repo: "{{ kubespray_repo }}"
     dest: "{{ kubespray_user_dir }}/kubespray"
