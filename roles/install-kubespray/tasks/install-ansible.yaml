@@ -25,5 +25,5 @@
     name: ansible
     update_cache: yes
   when: ansible_distribution == "Ubuntu"
-  #tags: [ never ]
+  tags: [ never ]
 
