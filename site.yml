@@ -1,5 +1,4 @@
 ---
-
 - name: Set dev-related Facts
   hosts: all
   tasks:
