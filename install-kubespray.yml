@@ -1,5 +1,6 @@
 ---
 - name: Install Kubespray
+  gather_facts: yes
   hosts: kube-master[0]
   tasks:
     - name: Install Kubespray Role
