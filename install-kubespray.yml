@@ -1,7 +1,6 @@
 ---
 - name: Install Kubespray
   hosts: all
-  become: "{{ kubespray_user }}"
   tasks:
     - name: Install Kubespray Role
       include_role:
