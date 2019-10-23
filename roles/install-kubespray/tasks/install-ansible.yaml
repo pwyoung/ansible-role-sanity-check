@@ -1,5 +1,7 @@
-- name: Install Anible via APT
+- name: Install Ansible via APT
+  become: yes
   apt:
     name: ansible
     update_cache: yes
   when: ansible_distribution == "Ubuntu"
+  #tags: [ never ]
