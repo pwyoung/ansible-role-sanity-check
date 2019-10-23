@@ -5,17 +5,12 @@
     - name: Set some facts
       set_fact:
         dump_all_variables: yes
-        install_python3: yes
         update_local_dns: yes
-        install_kubespray: yes
+        install_kubespray: no
 
 - name: Dump All Variables
   import_playbook: dump-all-variables.yml
   when: dump_all_variables
-
-- name: Install Python3
-  import_playbook: install-python3.yml
-  when: install_python3
 
 - name: Update Local DNS
   import_playbook: update-local-dns.yml
