@@ -6,7 +6,7 @@
       set_fact:
         dump_all_variables: yes
         update_local_dns: yes
-        install_kubespray: no
+        install_kubespray: yes
 
 - name: Dump All Variables
   import_playbook: dump-all-variables.yml
