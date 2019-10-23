@@ -1,0 +1,9 @@
+---
+- name: Install Python3
+  hosts: all
+  #hosts: hosts: kube-master[0]
+  tasks:
+    - name: Install Python3
+      include_role:
+        name: install-python3
+

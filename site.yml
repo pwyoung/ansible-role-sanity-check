@@ -1,50 +1,26 @@
 ---
-# Notes:
-#   - Let playbooks govern the order and scope of the tasks
-#     as required.
-#   - Put as much code as possible into Roles since they have
-#     support for re-use (e.g. via ansible-galaxy).
-
 - name: Set dev-related Facts
   hosts: all
   tasks:
     - name: Set some facts
       set_fact:
-        debug_info: no
+        dump_all_variables: no
+        install_python3: no
         update_local_dns: no
-        install_kubespray: yes        
+        install_kubespray: yes
 
-- name: Dump All Ansible Variables
-  hosts: all
-  become: yes
-  tasks:
-    - name: Dump all variables
-      include_role:
-        name: dump-all-variables
-      when: debug_info
+- name: Dump All Variables
+  import_playbook: dump-all-variables.yml
+  when: dump_all_variables
 
-- name: Update local DNS
-  hosts: all
-  vars:
-    local_dns_group: "all"
-  tasks:
-    - name: Update local DNS on all hosts with Ansible Group {{ local_dns_group }}
-      include_role:
-        name: update-local-dns
-      when: update_local_dns
+- name: Install Python3
+  import_playbook: install-python3.yml
+  when: install_python3
 
-- name: Configure Kubespray User
-  import_playbook: configure-kubespray-user.yml
-  when: install_kubespray
-
-- name: Install Kubespray
-  hosts: kube-master[0]
-  become: yes
-  become_user: "{{ kubespray_user }}"  
-  tasks:
-    - name: Include install-kubespray Role
-      include_role:
-        name: install-kubespray
-      when: install_kubespray
-
+- name: Update Local DNS
+  import_playbook: update-local-dns.yml
+  when: update_local_dns
         
+- name: Install Kubespray
+  import_playbook: install-kubespray.yml
+  when: install_kubespray

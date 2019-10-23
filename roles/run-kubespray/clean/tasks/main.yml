@@ -1,0 +1,6 @@
+---
+
+- name: Destroy the cluster
+  shell:
+    cmd: "{{ kubespray_user_home }}/destroy-cluster.sh"
+  ignore_errors: yes

@@ -1,12 +1,6 @@
-
-# Set ansible_python_interpreter="/usr/bin/python3" because:
-#   - Kubespray supports Python3
-#   - Some systems (e.g. generic/ubuntu1804) do not automatically include 'python', but do have 'python3'
-- name: Verify Python3
-  block:
-    - name: Get Python3 version
-      shell: "python3 --version | cut -d' ' -f 2"
-      register: result
-    - name: Show Python3 version
-      debug:
-        msg={{ result }}
+- name: Install Kubespray Git Repo
+  git:
+    repo: "{{ kubespray_repo }}"
+    dest: "{{ kubespray_user_dir }}/kubespray"
+    version: "{{ kubespray_version }}"
+    force: yes
