@@ -1,7 +1,10 @@
-# Vagrant installs a newer ansible in /home/vagrant/.local/bin/ansible
-# and puts it in PATH.
-# But, we might provision without Vagrant, so don't rely on it.
-#/usr/bin/ansible --version
+- name: Install Ansible via APT
+  become: yes
+  apt:
+    name: ansible
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+  #tags: [ never ]
 
 - name: Run Command
   command: "ansible --version"
@@ -18,12 +21,4 @@
 - name: Show Shell Results
   debug:
     msg: "{{ results }}"
-
-- name: Install Ansible via APT
-  become: yes
-  apt:
-    name: ansible
-    update_cache: yes
-  when: ansible_distribution == "Ubuntu"
-  tags: [ never ]
 
