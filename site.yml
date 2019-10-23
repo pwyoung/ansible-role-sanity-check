@@ -4,23 +4,20 @@
 #     as required.
 #   - Put as much code as possible into Roles since they have
 #     support for re-use (e.g. via ansible-galaxy).
-- hosts: all
-  tasks:
-    - name: Set dev/test related facts
-      set_fact:
-        debug_info: no
-        update_local_dns: no
-        configure_kubespray_user: yes
 
-- hosts: all
-  become: yes
+- name: Set dev-related Facts
+  hosts: all
   tasks:
-      - name: Test that this can create create a file
-        command: /usr/bin/touch /tmp/test_from_site.yml
-        when: debug_info
+    - name: Set some facts
+      set_fact:
+        debug_info: yes
+        update_local_dns: yes
+        configure_kubespray_user: yes
+        install_kubespray: yes        
 
 - name: Dump All Ansible Variables
   hosts: all
+  become: yes
   tasks:
     - name: Dump all variables
       include_role:
@@ -40,3 +37,19 @@
 - name: Configure Kubespray User
   import_playbook: configure-kubespray-user.yml
   when: configure_kubespray_user
+
+- name: Install Kubespray
+  hosts: kube-master[0]
+  become: yes
+  become_user: "{{ kubespray_user }}"  
+  tasks:
+    - name: TEST
+      debug:
+        msg="TEST"
+      when: install_kubespray
+    - name: Install Kubespray
+      include_role:
+        name: install-kubespray
+      when: install_kubespray
+
+        

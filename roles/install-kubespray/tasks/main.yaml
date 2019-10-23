@@ -1,0 +1,12 @@
+
+#- name: Get pyenv version
+#  shell: "{{ kubespray_user_home }}/.pyenv/shims/python --version | cut -d' ' -f 2"
+#  register: result
+#  ignore_errors: yes
+#  tags:
+#   - SKIP
+
+- name: Get pyenv version
+  shell: "python --version | cut -d' ' -f 2"
+  register: result
+  ignore_errors: yes
