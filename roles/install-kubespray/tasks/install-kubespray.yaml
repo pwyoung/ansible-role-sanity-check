@@ -1,5 +1,4 @@
 # Use the ansible user, but support changing it here.
-#
 - name: Assign kubespray user facts
   set_fact:
     kubespray_user_id: "{{ ansible_user_id }}"
