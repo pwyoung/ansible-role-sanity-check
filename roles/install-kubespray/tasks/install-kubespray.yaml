@@ -4,7 +4,8 @@
     kubespray_dir: "{{ kubespray_user_dir }}/kubespray"  
     kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root cluster.yml"
     kubespray_create_cluster_script: "{{ kubespray_user_dir }}/create-cluster.sh"
-    kubespray_create_cluster_log: "{{ kubespray_user_dir }}/create-cluster.log"        
+    kubespray_create_cluster_log: "{{ kubespray_user_dir }}/create-cluster.log"
+    hosts_yml: "{{ hosts_yml }}"
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
@@ -42,13 +43,13 @@
 - name: Install Kubespray inventory file
   template:
     src: templates/inventory/hosts.ini.j2
-    dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
+    dest: "{{ hosts_yml }}"
     mode: '0700'
 
 - name: Create a script to create the cluster
   copy:
     content: "cd {{ kubespray_dir }} && {{ kubespray_create_cluster_cmd }} | tee {{ kubespray_create_cluster_log }}"
-    dest: "{{ hosts_yml }}"
+    dest: "{{ kubespray_create_cluster_script }}"
     mode: 0744
     
 - name: Run Kubespray
