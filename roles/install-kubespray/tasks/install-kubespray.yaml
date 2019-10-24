@@ -50,7 +50,7 @@
     mode: 0744
     
 - name: Run Kubespray
-  cmd: "{{ kubespray_create_cluster_script }}"
+  shell: "sh -x {{ kubespray_create_cluster_script }}"
   register: result
 
 - name: Show Kubespray results
