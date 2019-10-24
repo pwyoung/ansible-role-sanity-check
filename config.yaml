@@ -101,18 +101,13 @@ vagrant_global:
 # CONFIGURATION: VIA ANSIBLE
 ################################################################################
 ansible:
-  # These roles are added to build/requirements.yaml and are added
-  # locally via 'ansible-galaxy'.
+  # build/requirements.yaml
   roles:
     - src: https://github.com/pwyoung/ansible-role-sanity-check
       name: ansible-role-sanity-check
       scm: git
       version: 0.0.2
-  # 'playbooks' specifies a list of playbooks to fetch.
-  # Currently, only 'scm: git' is supported.
-  # Each playbook will be cloned into build/playbooks/<entry>
-  # A script, build/run-playbooks.sh will be created so that the playbooks
-  # can be run manually (e.g. during development of a local role)
+  # build/playbooks/<playbooks> and build/run-playbooks.sh
   playbooks:
     #EXAMPLE
     #- name: "ansible-playbook-sanity-check"
@@ -124,7 +119,7 @@ ansible:
       scm: git
       src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray
       version: dev
-  # Use this to create build/inventory.yml
+  # build/inventory.yml
   inventory:
     all:
       vars:
@@ -154,3 +149,8 @@ ansible:
             kube-test:
         calico-rr:
           hosts: {}
+  # build/extra_vars.yml
+  extra_vars:
+    # Helm
+    #   https://github.com/kubernetes-sigs/kubespray/blob/master/roles/kubernetes-apps/helm/defaults/main.yml
+    helm_enabled: true

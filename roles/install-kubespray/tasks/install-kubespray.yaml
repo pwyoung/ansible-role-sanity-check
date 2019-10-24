@@ -1,14 +1,21 @@
 #TODO: Move some of these to ../defaults/
-- name: Install-Kubespray facts
+- name: Set some facts
   set_fact:
-    kubespray_dir: "{{ kubespray_user_dir }}/kubespray"  
+    hosts_yml: "{{ hosts_yml }}"
+    ansible_playbook: "{{ ansible_playbook }}"
+    kubespray_dir: "{{ kubespray_user_dir }}/kubespray"
     kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root cluster.yml"
     kubespray_create_cluster_script: "{{ kubespray_user_dir }}/create-cluster.sh"
     kubespray_create_cluster_log: "{{ kubespray_user_dir }}/create-cluster.log"
-    hosts_yml: "{{ hosts_yml }}"
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
+
+- name: Copy our local Ansible extra_vars.yaml
+  copy:
+    content: "{{ build_ansible_extra_vars_yaml | default() }}"
+    dest: "{{ ansible_extra_vars_yaml }}"
+    mode: 0600
 
 - name: Install SSH config file
   template:
@@ -34,10 +41,6 @@
   vars:
     src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster"
-
-- name: TODO - add extra_vars.yaml to override config. Test that we can omit blocks
-  debug:
-    msg: "{{ result }}"
 
 - name: Install Kubespray inventory file
   template:
