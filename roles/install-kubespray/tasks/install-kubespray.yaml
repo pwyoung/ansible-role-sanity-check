@@ -3,6 +3,7 @@
   set_fact:
     hosts_yml: "{{ hosts_yml }}"
     ansible_playbook: "{{ ansible_playbook }}"
+    ansible_extra_vars_file: "{{ kubespray_user_dir }}/extra_vars.yaml"    
     kubespray_dir: "{{ kubespray_user_dir }}/kubespray"
     kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root cluster.yml"
     kubespray_create_cluster_script: "{{ kubespray_user_dir }}/create-cluster.sh"
@@ -11,11 +12,18 @@
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
 
-- name: Copy our local Ansible extra_vars.yaml
-  copy:
-    content: "{{ build_ansible_extra_vars_yaml | default() }}"
-    dest: "{{ ansible_extra_vars_yaml }}"
-    mode: 0600
+- name: Read the local build/extra_vars.yaml file
+  debug: msg="the value of foo.txt is {{lookup('file', '/tmp/x') }}"
+    
+# Put build_ansible_extra_vars into a file so we can use it
+#- name: Copy our local Ansible extra_vars.yaml
+#  copy:
+#    content: "{{ build_ansible_extra_vars | default('') | to_nice_yaml }}"
+#    dest: "{{ ansible_extra_vars_file }}"
+#    mode: 0600
+
+- name: BAIL
+  fail: msg="STOP HERE"
 
 - name: Install SSH config file
   template:
