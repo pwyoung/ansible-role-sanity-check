@@ -50,7 +50,7 @@
     mode: 700
     
 - name: Run Kubespray
-  command: "cd {{ kubespray_dir }} && sh {{ kubespray_create_cluster_script }}"
+  shell: "cd {{ kubespray_dir }} && sh {{ kubespray_create_cluster_script }}"
   register: result
 
 - name: Show Kubespray results
