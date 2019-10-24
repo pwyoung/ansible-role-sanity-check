@@ -35,7 +35,7 @@
 - name: Run Kubespray
   command: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root {{ playbook }}"
   args:
-    chdir: ""{{ kubespray_user_dir }}/kubespray"
+    chdir: "{{ kubespray_user_dir }}/kubespray"
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
