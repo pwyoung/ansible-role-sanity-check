@@ -9,7 +9,7 @@ all:
   hosts:
 {% for host in groups['k8s-cluster'] %}
     {{ host }}
-      ansible_host: {{ host }}
+      ansible_host: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
       ip: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
       access_ip: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
 {% endfor %}
