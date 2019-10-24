@@ -4,7 +4,7 @@
     dest: "{{ kubespray_user_dir }}/kubespray"
     version: "{{ kubespray_version }}"
     force: yes
-    tags: [ never, debug ]
+  tags: [ never, debug ]
     
 - name: Install Kubespray Python requirements
   become: yes
