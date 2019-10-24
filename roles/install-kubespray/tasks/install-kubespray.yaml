@@ -3,7 +3,6 @@
     src: templates/ssh/config.j2
     dest: "{{ kubespray_user_dir }}/.ssh/config"
     mode: '0644'
-  #tags: [ never, debug ]
 
 - name: Install Kubespray Git Repo
   git:
@@ -11,7 +10,6 @@
     dest: "{{ kubespray_user_dir }}/kubespray"
     version: "{{ kubespray_version }}"
     force: yes
-  #tags: [ never, debug ]
     
 - name: Install Kubespray Python requirements
   become: yes
@@ -40,3 +38,8 @@
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
     playbook: "cluster.yml"
+  register: result
+
+- name: Show Kubespray results
+  debug:
+    msg: "{{ result }}"
