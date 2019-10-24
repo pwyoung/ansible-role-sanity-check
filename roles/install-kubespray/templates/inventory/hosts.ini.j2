@@ -5,41 +5,37 @@
 # Mimicks result of contrib/inventory_builder/inventory.py from https://github.com/kubernetes-sigs/kubespray
 # But preserves groups defined in the "outer" Ansible job
 
-# HOSTS
-[all]
+all:
+  hosts:
 {% for host in groups['k8s-cluster'] %}
-{{ host }} ansible_host={{ host }} ip={{ hostvars[host]['ansible_default_ipv4']['address'] }} access_up: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
+    {{ host }}
+      ansible_host: {{ host }}
+      ip: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
+      access_ip: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
 {% endfor %}
-
-# GROUPS
-
-[kube-master]
+  children:
+    kube-master:
+      hosts:    
 {% for host in groups['kube-master'] %}
-{{ host }}
+        {{ host }}:
 {% endfor %}
-
-[kube-node]
-{% for host in groups['kube-node'] %}
-{{ host }}
+    kube-node:
+      hosts:    
+{% for host in groups['all'] %}
+        {{ host }}:
 {% endfor %}
-
-[etcd]
+    etcd:
+      hosts:
 {% for host in groups['etcd'] %}
-{{ host }}
+        {{ host }}:
 {% endfor %}
-
-[k8s-cluster]
-{% for host in groups['k8s-cluster'] %}
-{{ host }}
-{% endfor %}
-
-[vault]
-{% for host in groups['vault'] %}
-{{ host }}
-{% endfor %}
-
-[kube-ingress]
-{% for host in groups['kube-ingress'] %}
-{{ host }}
-{% endfor %}
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+#    kube-ingress:
+#      hosts:
+#{% for host in groups['kube-ingress'] %}
+#        {{ host }}
+#{% endfor %}
 
