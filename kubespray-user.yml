@@ -5,7 +5,7 @@
     - name: Use the current ansible user
       set_fact:
         kubespray_user: "{{ ansible_user_id }}"
-        kubespray_user_dir: "{{ ansible_user_home }}"
+        kubespray_user_dir: "{{ ansible_user_dir }}"
 
 - name: Create the SSH key
   hosts: kube-master[0]
