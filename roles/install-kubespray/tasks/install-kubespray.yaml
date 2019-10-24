@@ -47,12 +47,10 @@
   copy:
     content: "{{ kubespray_create_cluster_cmd }}"
     dest: "{{ kubespray_create_cluster_script }}"
-    mode: 500
+    mode: 700
     
 - name: Run Kubespray
-  command: "{{ kubespray_create_cluster_script }}"
-  args:
-    chdir: "{{ kubespray_user_dir }}/kubespray"
+  command: "cd {{ kubespray_dir }} && sh {{ kubespray_create_cluster_script }}"
   register: result
 
 - name: Show Kubespray results
