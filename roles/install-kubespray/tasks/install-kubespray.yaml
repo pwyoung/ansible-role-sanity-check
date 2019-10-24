@@ -15,7 +15,6 @@
     src: templates/ssh/config.j2
     dest: "{{ kubespray_user_dir }}/.ssh/config"
     mode: '0644'
-  tags: [ never, debug ]
   
 - name: Install Kubespray Git Repo
   git:
@@ -23,14 +22,12 @@
     dest: "{{ kubespray_user_dir }}/kubespray"
     version: "{{ kubespray_version }}"
     force: yes
-  tags: [ never, debug ]
   
 - name: Install Kubespray Python requirements
   become: yes
   pip:
     requirements: "{{ kubespray_user_dir }}/kubespray/requirements.txt"
     executable: "pip3"
-  tags: [ never, debug ]
 
 - name: Copy Sample Config files
   command: "cp -rfp {{ src }} {{ dest }}"
@@ -50,7 +47,7 @@
 
 - name: Create a script to create the cluster
   copy:
-    content: "cd {{ kubespray_dir }} && {{ kubespray_create_cluster_cmd }} | tee {{ kubespray_create_cluster_log }}"
+    content: "cd {{ kubespray_dir }} && time {{ kubespray_create_cluster_cmd }} | tee {{ kubespray_create_cluster_log }}"
     dest: "{{ kubespray_create_cluster_script }}"
     mode: 0744
     
