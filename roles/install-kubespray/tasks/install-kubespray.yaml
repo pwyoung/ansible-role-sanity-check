@@ -45,9 +45,9 @@
 
 - name: Create a script to create the cluster
   copy:
-    content: "{{ kubespray_create_cluster_cmd }}"
+    content: "cd {{ kubespray_dir }} && {{ kubespray_create_cluster_cmd }}"
     dest: "{{ kubespray_create_cluster_script }}"
-    mode: 700
+    mode: 0744
     
 - name: Run Kubespray
   shell: "cd {{ kubespray_dir }} && sh {{ kubespray_create_cluster_script }}"
