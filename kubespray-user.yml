@@ -10,7 +10,7 @@
 - name: Create the SSH key
   hosts: kube-master[0]
   become: yes
-  become: {{ kubespray_user }}  
+  become: "{{ kubespray_user }}"
   any_errors_fatal: true
   tasks:
     - name: Create SSH Key
