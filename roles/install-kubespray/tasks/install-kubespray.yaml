@@ -22,7 +22,7 @@
 
 - name: Create directories for my cluster
   file:
-    path: "{{ kubespray_user_home }}/kubespray/inventory/mycluster/group_vars"
+    path: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/group_vars"
     state: directory
     mode: 0700
     
