@@ -21,10 +21,10 @@
   #tags: [ never, debug ]
 
 - name: Create directories for my cluster
-  copy:
+  command: "cp -rfp {{ src }} {{ dest }}"
+  vars:
     src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster"
-    mode: preserve    
     
 - name: Install Kubespray inventory file
   template:
