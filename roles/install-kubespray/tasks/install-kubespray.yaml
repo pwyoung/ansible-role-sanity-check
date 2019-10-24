@@ -42,7 +42,7 @@
 
 - name: Install Kubespray inventory file
   template:
-    src: templates/inventory/hosts.ini.j2
+    src: templates/inventory/hosts.yml.j2
     dest: "{{ hosts_yml }}"
     mode: '0700'
 
