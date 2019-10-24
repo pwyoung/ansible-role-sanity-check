@@ -13,7 +13,7 @@
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
 
 - name: Read the local build/extra_vars.yaml file
-  debug: msg="the value of foo.txt is {{lookup('file', '/tmp/x') }}"
+  debug: msg="the value of foo.txt is {{lookup('file', '/home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray/build/extra_vars.yaml') }}"
     
 # Put build_ansible_extra_vars into a file so we can use it
 #- name: Copy our local Ansible extra_vars.yaml
