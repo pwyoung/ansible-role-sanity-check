@@ -47,7 +47,7 @@
   copy:
     content: "{{ kubespray_create_cluster_cmd }}"
     dest: "{{ kubespray_create_cluster_script }}"
-    mode: 644
+    mode: 500
     
 - name: Run Kubespray
   command: "{{ kubespray_create_cluster_script }}"
