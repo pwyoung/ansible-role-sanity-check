@@ -20,7 +20,7 @@
     executable: "pip3"
   #tags: [ never, debug ]
 
-- name: Create directories for my cluster
+- name: Copy Sample Config files
   command: "cp -rfp {{ src }} {{ dest }}"
   vars:
     src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
@@ -29,5 +29,14 @@
 - name: Install Kubespray inventory file
   template:
     src: templates/inventory/hosts.ini.j2
-    dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.ini"
+    dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
     mode: '0700'
+
+- name: Run Kubespray
+  command: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root {{ playbook }}"
+    args:
+      chdir: ""{{ kubespray_user_dir }}/kubespray"
+  vars:
+    ansible_playbook: "/usr/local/bin/ansible-playbook"
+    hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
+    playbook: "cluster.yml"
