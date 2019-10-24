@@ -15,20 +15,22 @@
     src: templates/ssh/config.j2
     dest: "{{ kubespray_user_dir }}/.ssh/config"
     mode: '0644'
-
+  tags: [ never, debug ]
+  
 - name: Install Kubespray Git Repo
   git:
     repo: "{{ kubespray_repo }}"
     dest: "{{ kubespray_user_dir }}/kubespray"
     version: "{{ kubespray_version }}"
     force: yes
-    
+  tags: [ never, debug ]
+  
 - name: Install Kubespray Python requirements
   become: yes
   pip:
     requirements: "{{ kubespray_user_dir }}/kubespray/requirements.txt"
     executable: "pip3"
-  #tags: [ never, debug ]
+  tags: [ never, debug ]
 
 - name: Copy Sample Config files
   command: "cp -rfp {{ src }} {{ dest }}"
