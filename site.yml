@@ -5,7 +5,6 @@
 
 - name: Update Local DNS
   import_playbook: update-local-dns.yml
-  #tags: [ never, debug ]  
         
 - name: Install Kubespray
   import_playbook: install-kubespray.yml
