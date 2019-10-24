@@ -1,14 +1,11 @@
-
+---
 - name: Install Ansible
   include_tasks: install-ansible.yaml
   #tags: [ never, debug ]
-
-# TODO: consider using a role that uses venv
-#       and robustly manages Python3
+  
 - name: Install Pip3
   include_tasks: install-pip3.yaml
-  #tags: [ never, debug ]
 
 - name: Install Kubespray
   include_tasks: install-kubespray.yaml
-  #tags: [ never, debug ]
+
