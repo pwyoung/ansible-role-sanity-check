@@ -6,6 +6,8 @@
 - name: Update Local DNS
   import_playbook: update-local-dns.yml
         
+- name: Kubespray User 
+  import_playbook: kubespray-user.yml
+
 - name: Install Kubespray
   import_playbook: install-kubespray.yml
-
