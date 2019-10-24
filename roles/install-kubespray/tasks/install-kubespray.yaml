@@ -1,3 +1,10 @@
+- name: Install SSH config file
+  template:
+    src: templates/ssh/config.j2
+    dest: "{{ kubespray_user_dir }}/.ssh/config"
+    mode: '0644'
+  #tags: [ never, debug ]
+
 - name: Install Kubespray Git Repo
   git:
     repo: "{{ kubespray_repo }}"
@@ -13,18 +20,11 @@
     executable: "pip3"
   #tags: [ never, debug ]
 
-- name: Install SSH config file
-  template:
-    src: templates/ssh/config.j2
-    dest: "{{ kubespray_user_dir }}/.ssh/config"
-    mode: '0644'
-  #tags: [ never, debug ]
-
 - name: Create directories for my cluster
-  file:
-    path: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/group_vars"
-    state: directory
-    mode: 0700
+  copy:
+    src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
+    dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster"
+    mode: preserve    
     
 - name: Install Kubespray inventory file
   template:
