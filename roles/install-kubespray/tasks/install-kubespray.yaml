@@ -30,14 +30,22 @@
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
     mode: '0700'
 
-- name: Run Kubespray
-  command: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root {{ playbook }}"
-  args:
-    chdir: "{{ kubespray_user_dir }}/kubespray"
+- name: Create Kubespray command
+  set_fact:
+    kubespray_command: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root {{ playbook }}"
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
     playbook: "cluster.yml"
+
+- name: Show Kubespray command (for dev/test)
+  debug:
+    msg: "{{ kubespray_command }}"
+    
+- name: Run Kubespray
+  command: "{{ kubespray_command }}"
+  args:
+    chdir: "{{ kubespray_user_dir }}/kubespray"
   register: result
 
 - name: Show Kubespray results
