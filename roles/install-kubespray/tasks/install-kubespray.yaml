@@ -23,27 +23,34 @@
   vars:
     src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster"
-    
+
+- name: TODO - add extra_vars.yaml to override config. Test that we can omit blocks
+  debug:
+    msg: "{{ result }}"
+
 - name: Install Kubespray inventory file
   template:
     src: templates/inventory/hosts.ini.j2
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
     mode: '0700'
 
-- name: Create Kubespray command
+- name: Create Kubespray command variables
   set_fact:
-    kubespray_command: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root {{ playbook }}"
+    kubespray_dir: "{{ kubespray_user_dir }}/kubespray"  
+    kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root cluster.yml"
+    kubespray_create_cluster_script: "{{ kubespray_user_dir }}/create-cluster.sh"    
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
-    playbook: "cluster.yml"
 
-- name: Show Kubespray command (for dev/test)
-  debug:
-    msg: "{{ kubespray_command }}"
+- name: Create a script to create the cluster
+  copy:
+    content: "{{ kubespray_create_cluster_cmd }}"
+    dest: "{{ kubespray_create_cluster_script }}"
+    mode: 644
     
 - name: Run Kubespray
-  command: "{{ kubespray_command }}"
+  command: "{{ kubespray_create_cluster_script }}"
   args:
     chdir: "{{ kubespray_user_dir }}/kubespray"
   register: result
