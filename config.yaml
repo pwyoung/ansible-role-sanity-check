@@ -149,12 +149,13 @@ ansible:
             kube-test:
         calico-rr:
           hosts: {}
+  # build/extra_vars.yml
   # NB: DON'T PUT SECRETS HERE
   # Special Embedded use here: 
   #   The playbook above, 'ansible-playbook-deploy-kubespray', installs Ansible onto a 'control node'
   #   and runs Kubespray there.
   #   That's done for portability, reproducability, and isolation (security) reasons.
-  #   The local extra_vars.yaml is copied to the control node and used to modulate the run there.
+  #   The local file (build/extra_vars.yaml) is copied to the control node and used to modulate the run there.
   #   So, make sure to not include any "real" secrets in this file (that can't be on the control node).
   extra_vars:
     # Helm
