@@ -3,14 +3,22 @@
   set_fact:
     hosts_yml: "{{ hosts_yml }}"
     ansible_playbook: "{{ ansible_playbook }}"
-    ansible_extra_vars_file: "{{ kubespray_user_dir }}/extra_vars.yaml"    
-    kubespray_dir: "{{ kubespray_user_dir }}/kubespray"
-    kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} --become --become-user=root cluster.yml"
+    ansible_extra_vars_file: "{{ kubespray_user_dir }}/extra_vars.yaml"
+    kubespray_dir: "{{ kubespray_user_dir }}/kubespray"    
+  vars:
+    ansible_playbook: "/usr/local/bin/ansible-playbook"
+    hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
+
+- name: Set more facts
+  set_fact:
+    kubespray_create_cluster_cmd: "{{ ansible_playbook }} -i {{ hosts_yml }} -e @{{ ansible_extra_vars_file }} --become --become-user=root cluster.yml"
     kubespray_create_cluster_script: "{{ kubespray_user_dir }}/create-cluster.sh"
     kubespray_create_cluster_log: "{{ kubespray_user_dir }}/create-cluster.log"
   vars:
     ansible_playbook: "/usr/local/bin/ansible-playbook"
     hosts_yml: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster/hosts.yml"
+
+
 
 - name: Copy our local Ansible extra_vars.yaml
   copy:
