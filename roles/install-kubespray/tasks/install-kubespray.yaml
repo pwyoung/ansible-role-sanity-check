@@ -42,7 +42,7 @@
     dest: "{{ ansible_extra_vars_file }}"
     mode: 0600
   vars:
-    local_file: "{{ lookup('env','BUILD_DIR') }}/extra_vars.yaml"
+    local_file: "{{ lookup('env','ANSIBLE_DIR') }}/extra_vars.yaml"
 
 - name: Create a script to create the cluster
   copy:
