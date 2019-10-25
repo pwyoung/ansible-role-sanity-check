@@ -32,9 +32,9 @@
     dest: "{{ kubespray_create_cluster_script }}"
     mode: 0744
 
-- name: BAIL
-  fail: msg="STOP HERE"
-
+# DEV
+#- name: BAIL
+#  fail: msg="STOP HERE"
 
 - name: Install SSH config file
   template:
