@@ -117,8 +117,14 @@ ansible:
     #  entry: playbook.yaml # Defaults to site.yml
     - name: ansible-playbook-deploy-kubespray
       scm: git
-      src: file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray
-      version: dev
+      # This is useful for doing development of this Ansible Playbook.
+      # The config below assumes you are working in a branch called 'dev'.
+      # If 'src' points to the local code, then this will check out the
+      # latest 'dev' commit to ./build/playbooks/<name> and use it in the run.
+      #src: file:///<PATH>/ansible-playbook-deploy-kubespray
+      #version: dev      
+      src: "https://github.com/pwyoung/ansible-playbook-deploy-kubespray.git"
+      version: master
   # build/inventory.yml
   inventory:
     all:
