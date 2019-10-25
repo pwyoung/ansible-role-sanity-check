@@ -32,6 +32,12 @@
     dest: "{{ kubespray_create_cluster_script }}"
     mode: 0744
 
+- name: Install Kubespray inventory file
+  template:
+    src: templates/inventory/hosts.yml.j2
+    dest: "{{ hosts_yml }}"
+    mode: '0700'
+
 # DEV
 #- name: BAIL
 #  fail: msg="STOP HERE"
@@ -60,12 +66,6 @@
   vars:
     src: "{{ kubespray_user_dir }}/kubespray/inventory/sample"
     dest: "{{ kubespray_user_dir }}/kubespray/inventory/mycluster"
-
-- name: Install Kubespray inventory file
-  template:
-    src: templates/inventory/hosts.yml.j2
-    dest: "{{ hosts_yml }}"
-    mode: '0700'
     
 - name: Run Kubespray
   shell: "sh -x {{ kubespray_create_cluster_script }}"
