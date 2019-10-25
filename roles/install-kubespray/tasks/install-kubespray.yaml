@@ -16,7 +16,8 @@
   debug:
     msg="the value of foo.txt is {{lookup('file', local_file) }}"
   vars:
-    local_file: '/home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray/build/extra_vars.yaml'
+    local_file: "{{ lookup('env','BUILD_DIR') }}"/extra_vars.yaml
+    #local_file: '/home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray/build/extra_vars.yaml'    
     
 # Put build_ansible_extra_vars into a file so we can use it
 #- name: Copy our local Ansible extra_vars.yaml
