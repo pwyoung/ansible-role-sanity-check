@@ -149,7 +149,15 @@ ansible:
             kube-test:
         calico-rr:
           hosts: {}
-  # build/extra_vars.yml
+  # NOTE
+  #   - Local use:
+  #     The code generates a local file, build/extra_vars.yaml, and uses it to run all playbooks.
+  #   - Embedded use: <NB: DON'T PUT REAL SECRETS HERE>
+  #     This role installs Ansible on a node and runs Ansible from there.
+  #     That's done for portability, reproducability, and isolation (security) reasons.
+  #     This role has code that copies the local extra_vars.yaml to a node and uses it in the Ansible
+  #     job run on the remote node.
+  #     So, make sure to not include any secrets in this file.
   extra_vars:
     # Helm
     #   https://github.com/kubernetes-sigs/kubespray/blob/master/roles/kubernetes-apps/helm/defaults/main.yml
