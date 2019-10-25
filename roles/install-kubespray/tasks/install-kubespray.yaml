@@ -64,6 +64,8 @@
 
 - name: Run Kubespray
   shell: "{{ kubespray_create_cluster_script }}"
+  args:
+    chdir: "{{ kubespray_dir }}"
   register: result
 
 - name: Show Kubespray results
