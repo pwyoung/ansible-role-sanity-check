@@ -158,6 +158,21 @@ ansible:
   #   The local file (build/extra_vars.yaml) is copied to the control node and used to modulate the run there.
   #   So, make sure to not include any "real" secrets in this file (that can't be on the control node).
   extra_vars:
+    # Kubespray generic/download parameters:
+    #   Notes:
+    #     This has things like helm_version which is not listed in roles/kubernetes-apps/helm/defaults/main.yml
+    #   URL:
+    #     https://github.com/kubernetes-sigs/kubespray/blob/master/roles/download/defaults/main.yml
+    # 
     # Helm
     #   https://github.com/kubernetes-sigs/kubespray/blob/master/roles/kubernetes-apps/helm/defaults/main.yml
     helm_enabled: true
+    #
+    # kubespray_ingress_nginx_enabled
+    # dns_cores_per_replica
+    # dns_nodes_per_replica
+    # populate_inventory_to_hosts_file=false
+    # dns_mode
+    # cluster_name
+    # kube_network_plugin
+    # local_volume_provisioner_enabled
