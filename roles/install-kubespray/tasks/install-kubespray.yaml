@@ -26,8 +26,15 @@
   vars:
     local_file: "{{ lookup('env','BUILD_DIR') }}/extra_vars.yaml"
 
+- name: Create a script to create the cluster
+  copy:
+    content: "cd {{ kubespray_dir }} && (time {{ kubespray_create_cluster_cmd }}) &> /dev/stdout | tee {{ kubespray_create_cluster_log }}"
+    dest: "{{ kubespray_create_cluster_script }}"
+    mode: 0744
+
 - name: BAIL
   fail: msg="STOP HERE"
+
 
 - name: Install SSH config file
   template:
@@ -59,12 +66,6 @@
     src: templates/inventory/hosts.yml.j2
     dest: "{{ hosts_yml }}"
     mode: '0700'
-
-- name: Create a script to create the cluster
-  copy:
-    content: "cd {{ kubespray_dir }} && (time {{ kubespray_create_cluster_cmd }}) &> /dev/stdout | tee {{ kubespray_create_cluster_log }}"
-    dest: "{{ kubespray_create_cluster_script }}"
-    mode: 0744
     
 - name: Run Kubespray
   shell: "sh -x {{ kubespray_create_cluster_script }}"
