@@ -103,10 +103,10 @@ vagrant_global:
 ansible:
   # build/requirements.yaml
   roles:
-    - src: https://github.com/pwyoung/ansible-role-sanity-check
-      name: ansible-role-sanity-check
-      scm: git
-      version: 0.0.2
+    - src: "https://github.com/pwyoung/ansible-role-sanity-check"
+      name: "ansible-role-sanity-check"
+      scm: "git"
+      version: "0.0.2"
   # build/playbooks/<playbooks> and build/run-playbooks.sh
   playbooks:
     #EXAMPLE
@@ -115,16 +115,10 @@ ansible:
     #  method: git
     #  version: 0.0.1
     #  entry: playbook.yaml # Defaults to site.yml
-    - name: ansible-playbook-deploy-kubespray
-      scm: git
-      # This is useful for doing development of this Ansible Playbook.
-      # The config below assumes you are working in a branch called 'dev'.
-      # If 'src' points to the local code, then this will check out the
-      # latest 'dev' commit to ./build/playbooks/<name> and use it in the run.
-      #src: file:///<PATH>/ansible-playbook-deploy-kubespray
-      #version: dev      
+    - name: "ansible-playbook-deploy-kubespray"
+      scm: "git"
       src: "https://github.com/pwyoung/ansible-playbook-deploy-kubespray.git"
-      version: master
+      version: "dev" 
   # build/inventory.yml
   inventory:
     all:
