@@ -38,7 +38,7 @@
 
 - name: Copy our local Ansible extra_vars.yaml
   copy:
-    content: "{{ lookup('file', local_file) }}" #local-3
+    content: "{{ lookup('file', local_file) }}" #local-4
     dest: "{{ ansible_extra_vars_file }}"
     mode: 0600
   vars:
