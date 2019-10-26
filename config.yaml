@@ -42,10 +42,10 @@ ansible:
   playbooks:
     - name: "ansible-playbook-deploy-kubespray"
       scm: "git"
-      #src: "https://github.com/pwyoung/ansible-playbook-deploy-kubespray.git"
-      #version: "dev"
-      src: "file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray"
-      version: dev
+      src: "https://github.com/pwyoung/ansible-playbook-deploy-kubespray.git"
+      version: "dev"
+      #src: "file:///home/pyoung/git/pwyoung/ansible-playbook-deploy-kubespray"
+      #version: dev
   inventory:
     all:
       vars:
