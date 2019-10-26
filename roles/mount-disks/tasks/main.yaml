@@ -1,0 +1,9 @@
+- name: Install deps
+  become: yes
+  become_user: root
+
+
+#- name: with_items -> loop
+#  debug:
+#    msg: "{{ item }}"
+#  loop: "{{ items|flatten(levels=1) }}"
