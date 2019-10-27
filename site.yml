@@ -6,11 +6,11 @@
 - name: Update Local DNS
   import_playbook: update-local-dns.yml
 
-- name: Mount additional data devices under /mnt/disks
-  import_playbook: mount-additional-data-devices.yml
+- name: Find, Partition, And Mount Block Devices ("data drives")
+  import_playbook: ./find-partition-and-mount-block-devices.yml
 
-- name: Kubespray User
-  import_playbook: kubespray-user.yml
+- name: Configure Kubespray User
+  import_playbook: configure-kubespray-user.yml
 
-- name: Install Kubespray
-  import_playbook: install-kubespray.yml
+- name: Install And Run Kubespray
+  import_playbook: install-and-run-kubespray.yml
