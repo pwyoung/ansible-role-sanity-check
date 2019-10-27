@@ -35,10 +35,14 @@ vagrant:
 
 ansible:
   roles:
-    - src: "https://github.com/pwyoung/ansible-role-sanity-check"
-      name: "ansible-role-sanity-check"
+    - name: "ansible-role-mount-disks"
+      src: "https://github.com/pwyoung/ansible-role-mount-disks.git"
       scm: "git"
-      version: "0.0.2"
+      version: "master"
+    - name: "create_partition"
+      src: "https://github.com/mcgrof/create_partition.git"
+      scm: "git"
+      version: "v1.2.1"
   playbooks:
     - name: "ansible-playbook-deploy-kubespray"
       scm: "git"
