@@ -36,13 +36,19 @@
     dest: "{{ hosts_yml }}"
     mode: '0700'
 
+- name: Set path to our local Ansible extra_vars.yaml
+  set_fact:
+    local_file: "{{ lookup('env','ANSIBLE_DIR') }}/extra_vars.yaml"
+
+- name: Show path to our local Ansible extra_vars.yaml
+  debug:
+    msg: "EXTRA_VARS={{ local_file }}"
+
 - name: Copy our local Ansible extra_vars.yaml
   copy:
-    content: "{{ lookup('file', local_file) }}" #local-5
+    content: "{{ lookup('file', local_file) }}" 
     dest: "{{ ansible_extra_vars_file }}"
     mode: 0600
-  vars:
-    local_file: "{{ lookup('env','ANSIBLE_DIR') }}/extra_vars.yaml"
 
 - name: Create a script to create the cluster
   copy:
