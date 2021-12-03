@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 
 
 def main():
     test_msg = "Default Test Message in Python Script"
-    
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--test-message',
                         action='store', type=str, dest="test_msg",
